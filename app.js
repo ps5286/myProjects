@@ -81,8 +81,8 @@ function checkMatch() {
        attempts++;
        setTimeout(removeOpenCards, 500);
        if(matches === 8) {
-       matchComplete();
-     }
+         matchComplete();
+       }
      }  else {
           openCard[0][0].classList.add("shake");
           openCard[1][0].classList.add("shake");
@@ -100,20 +100,17 @@ function updateMoves() {
 }
 
 function matchComplete() {
-  if (matches === 8) {
-    elapsedTime = elapsed;
-    difficultyRating();
-    alert("You've won in " + elapsedTime + " seconds" + " and in " + attempts + " attempts!");
-    window.clearInterval(timer);
-
-  }
+  elapsedTime = elapsed;
+  difficultyRating();
+  alert("You've won in " + elapsedTime + " seconds" + " and in " + attempts + " attempts!");
+  window.clearInterval(timer);
 }
 
 function playAgain() {
   $("restart").on("click", function() {
-       window.location.reload(true);
+  window.location.reload(true);
 });
-   clearInterval(timer);
+   window.clearInterval(timer);
  }
 
 // Reset openCard.length to 0
@@ -137,19 +134,14 @@ function disableClick() {
 
 
 function difficultyRating() {
-  console.log("hello");
   if (attempts > 8 && attempts < 16) {
-     starRating = starRating;
   } else if (attempts >= 16 && attempts <= 20) {
      $(".stars").removeClass("fa fa-star");
-     starRating = "2";
    } else if (attempts >= 21 && attempts <= 25) {
    } else if (attempts > 20) {
-     $("#stars").removeClass("fa fa-star");
-     starRating = "1";
+     $(".stars").removeClass("fa fa-star");
    } else if (attempts > 25) {
-     $("#stars").removeClass("fa fa-star");
-     starRating = "0";
+     $(".stars").removeClass("fa fa-star");
     }
 }
 
@@ -177,8 +169,8 @@ timer = window.setInterval(function()
 shuffle(playingDeck);
 createCard();
 revealCard();
-removeOpenCards();
-matchComplete();
+
+
 
 
 /*
