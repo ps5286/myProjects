@@ -26,7 +26,6 @@ var playingDeck = [
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-var beginGame = false;
 var openCard = [];
 var matches = 0;
 var attempts = 0;
@@ -34,7 +33,7 @@ var moves = 0;
 var starRating = 0;
 var elapsedTime = 0;
 var elapsed = 0;
-var startGame = false;
+
 
 
 
@@ -65,11 +64,10 @@ function createCard() {
 
 function revealCard() {
   $(".card").on("click", function() {
-    startGame = true;
   if ($(this).hasClass("open show")) { return;}
     $(this).toggleClass("open show");
     openCard.push($(this));
-    setTimeout(checkMatch, 1000);
+    setTimeout(checkMatch, 500);
 });}
 
 function checkMatch() {
@@ -82,7 +80,9 @@ function checkMatch() {
        matches += 1;
        attempts++;
        setTimeout(removeOpenCards, 500);
+       if(matches === 8) {
        matchComplete();
+     }
      }  else {
           openCard[0][0].classList.add("shake");
           openCard[1][0].classList.add("shake");
@@ -92,7 +92,6 @@ function checkMatch() {
        }
      }
     updateMoves();
-    difficultyRating();
   return;
 }
 
@@ -101,10 +100,12 @@ function updateMoves() {
 }
 
 function matchComplete() {
-  if (matches == 8) {
+  if (matches === 8) {
     elapsedTime = elapsed;
-    startGame = false;
-    alert("You've won in " + elapsed + " seconds" + " and in " + attempts + " attempts!");
+    difficultyRating();
+    alert("You've won in " + elapsedTime + " seconds" + " and in " + attempts + " attempts!");
+    window.clearInterval(timer);
+
   }
 }
 
@@ -136,7 +137,8 @@ function disableClick() {
 
 
 function difficultyRating() {
-  if (attempts > 0 && attempts < 16) {
+  console.log("hello");
+  if (attempts > 8 && attempts < 16) {
      starRating = starRating;
   } else if (attempts >= 16 && attempts <= 20) {
      $(".stars").removeClass("fa fa-star");
@@ -152,26 +154,23 @@ function difficultyRating() {
 }
 
 
-while(startGame == true) {
-  var start = new Date().getTime(),
-      time = 0,
-      elapsed = '0.0';
+var time = 0,
+    elapsed = '0.0';
 
-  function instance()
-  {
-      time += 100;
+timer = window.setInterval(function()
+{
+    time += 100;
 
-      elapsed = Math.floor(time / 100) / 10;
-      if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
+    elapsed = Math.floor(time / 100) / 10;
+    if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
 
-      document.title = elapsed;
-      document.getElementById("elapsedText").innerHTML = elapsed;
-      var diff = (new Date().getTime() - start) - time;
-      window.setTimeout(instance, (100 - diff));
-  }
+    document.getElementById("elapsedText").innerHTML = elapsed;
 
-  window.setTimeout(instance, 100);
-}
+}, 100);
+
+
+
+
 
 
 
@@ -179,7 +178,6 @@ shuffle(playingDeck);
 createCard();
 revealCard();
 removeOpenCards();
-difficultyRating();
 matchComplete();
 
 
