@@ -18,23 +18,37 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
-
-        	<span  id=attemptsText></span><span> Attempts</span>
-          <p></p>
-          <span id=elapsedText></span><span> Elapsed Time</span>
-
-          <div class="restart" id="restart"><A href="javascript:history.go(0)">
+          <div class="star-rating">
+        	  <ul class="stars">
+        		  <li><i class="fa fa-star" id="starThree"></i></li>
+        		  <li><i class="fa fa-star" id="starTwo"></i></li>
+        		  <li><i class="fa fa-star" id="starOne"></i></li>
+          	</ul>
+            <span  id=attemptsText></span><span> Attempts</span>
+         <div class="restart" id="restart"><A href="javascript:history.go(0)">
         		  <i class="fa fa-repeat"></i></A>
-        	  </div>
+         </div>
         </section>
 
         <ul class="deck">
         </ul>
+          </div>
+      <!-- Winner Popup source: www.w3schools.com -->
+        <div id="win-popup" class="popup zoomIn">
+
+          <!-- Popup content -->
+          <div class="popup-content">
+            <span class="close">&times;</span>
+            <h1>Congratulations!</h1>
+            <h3>You completed the game in <span  id=total-attempts></span><span> Attempts</span>
+            <p>and in</p>
+            <span id=elapsedText></span><span> Elapsed Time</span> seconds.</h3>
+            <span id="star-rating-text"> Star Rating: </span><span id="total-stars">0</span> out of 3</h3>
+            <button type="button" class="button" id="play-again-btn">
+              Play again!
+            </button>
+          </div>
+
         <!--<script src="C://users/ps5286/documents/movies/fresh-tomatoes-master/app.js"></script>-->
 
 </body>

@@ -29,11 +29,10 @@ var playingDeck = [
 var openCard = [];
 var matches = 0;
 var attempts = 0;
-var moves = 0;
 var starRating = 0;
 var elapsedTime = 0;
 var elapsed = 0;
-
+var starRating = 3;
 
 
 
@@ -97,14 +96,46 @@ function checkMatch() {
 
 function updateMoves() {
   document.getElementById("attemptsText").innerHTML = attempts;
+  /*$("#attempts").text(attempts.toString());*/
+
+  if (attempts > 0 && attempts < 16) {
+    starRating = starRating;
+  } else if (attempts >= 16 && attempts <= 20) {
+    $("#starOne").removeClass("fa-star");
+    starRating = "2";
+  } else if (attempts > 20) {
+    $("#starTwo").removeClass("fa-star");
+    starRating = "1";
+  }
 }
+
 
 function matchComplete() {
   elapsedTime = elapsed;
-  difficultyRating();
-  alert("You've won in " + elapsedTime + " seconds" + " and in " + attempts + " attempts!");
-  window.clearInterval(timer);
+  /*alert("You've won in " + elapsedTime + " seconds" + " and in " + attempts + " attempts!");
+  window.clearInterval(timer);*/
+  var modal = document.getElementById('win-popup');
+  var span = document.getElementsByClassName("close")[0];
+
+    $("#total-attempts").text(attempts);
+    $("#total-stars").text(starRating);
+
+    modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+   $("#play-again-btn").on("click", function() {
+       location.reload(true)
+   });
+
+   clearInterval(timer);
+
+
 }
+
 
 function playAgain() {
   $("restart").on("click", function() {
@@ -120,7 +151,7 @@ function removeOpenCards() {
 
 // Remove all classes except "match"
 function removeClasses() {
-  $(".card").removeClass("show open flipInY bounceIn shake wrong");
+  $(".card").removeClass("show open bounceIn shake wrong");
   removeOpenCards();
 }
 
@@ -131,19 +162,6 @@ function disableClick() {
   });
 }
 
-
-
-function difficultyRating() {
-  if (attempts > 8 && attempts < 16) {
-  } else if (attempts >= 16 && attempts <= 20) {
-     $(".stars").removeClass("fa fa-star");
-   } else if (attempts >= 21 && attempts <= 25) {
-   } else if (attempts > 20) {
-     $(".stars").removeClass("fa fa-star");
-   } else if (attempts > 25) {
-     $(".stars").removeClass("fa fa-star");
-    }
-}
 
 
 var time = 0,
