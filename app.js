@@ -122,7 +122,7 @@ function matchComplete() {
     span.onclick = function() {
       modal.style.display = "none";
     }
-     $("#playAgainBtn").on("click", function() {
+     $("#play-again-btn").on("click", function() {
          window.location.reload(true)
      });
    clearInterval(timer);
