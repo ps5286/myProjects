@@ -2,22 +2,22 @@
  * Create a list that holds all of your cards
  */
 var playingDeck = [
-  "fa-diamond",
-  "fa-diamond",
-  "fa-paper-plane-o",
-  "fa-paper-plane-o",
-  "fa-anchor",
-  "fa-anchor",
-  "fa-bolt",
-  "fa-bolt",
-  "fa-cube",
-  "fa-cube",
-  "fa-bicycle",
-  "fa-bicycle",
-  "fa-bomb",
-  "fa-bomb",
-  "fa-leaf",
-  "fa-leaf",
+    "fa-diamond",
+    "fa-diamond",
+    "fa-paper-plane-o",
+    "fa-paper-plane-o",
+    "fa-anchor",
+    "fa-anchor",
+    "fa-bolt",
+    "fa-bolt",
+    "fa-cube",
+    "fa-cube",
+    "fa-bicycle",
+    "fa-bicycle",
+    "fa-bomb",
+    "fa-bomb",
+    "fa-leaf",
+    "fa-leaf",
 ];
 
 /*
@@ -49,8 +49,8 @@ function shuffle(array) {
 
 /*function that creates the card in HTML and shuffles them for the game.*/
 function createCard() {
-  var gameList = shuffle(playingDeck);
-  gameList.forEach(function(card) {
+    var gameList = shuffle(playingDeck);
+    gameList.forEach(function(card) {
     $(".deck").append('<li class="card"><i class="fa ' + card + '"></i></li>');
     });
 }
@@ -58,28 +58,28 @@ function createCard() {
 
 /*function flips the card over when player selects it*/
 function revealCard() {
-  $(".card").on("click", function() {
-  if ($(this).hasClass("open show")) { return;}
-    $(this).toggleClass("open show");
-    openCard.push($(this));
-    setTimeout(checkMatch, 400);
+    $(".card").on("click", function() {
+    if ($(this).hasClass("open show")) { return;}
+      $(this).toggleClass("open show");
+      openCard.push($(this));
+      setTimeout(checkMatch, 400);
 });}
 
 
 /*function that checks whether the cards selected by the player match.*/
 function checkMatch() {
-  if (openCard.length === 2) {
-    if (openCard[0].children().attr("class") === openCard[1].children().attr("class")) {
-       openCard[0][0].classList.add("bounceIn", "match");
-       openCard[1][0].classList.add("bounceIn", "match");
-       $(openCard[0]).off("click");
-       $(openCard[1]).off("click");
-       matches += 1;
-       attempts++;
-       setTimeout(removeOpenCards, 400);
-       if(matches === 8) {
-         window.clearInterval(timer);
-         matchComplete();
+    if (openCard.length === 2) {
+      if (openCard[0].children().attr("class") === openCard[1].children().attr("class")) {
+         openCard[0][0].classList.add("bounceIn", "match");
+         openCard[1][0].classList.add("bounceIn", "match");
+         $(openCard[0]).off("click");
+         $(openCard[1]).off("click");
+         matches += 1;
+         attempts++;
+         setTimeout(removeOpenCards, 400);
+         if(matches === 8) {
+           window.clearInterval(timer);
+           matchComplete();
 
        }
      }  else {
@@ -96,63 +96,58 @@ function checkMatch() {
 
 /*function updates the moves and the star rating on the main game page as the game progresses.*/
 function updateMoves() {
-  document.getElementById("attemptsText").innerHTML = attempts;
-  if (attempts > 0 && attempts < 16) {
-    starRating = starRating;
-  } else if (attempts >= 16 && attempts <= 20) {
-    $("#starOne").removeClass("fa-star");
-    starRating = "2";
-  } else if (attempts > 20) {
-    $("#starTwo").removeClass("fa-star");
-    starRating = "1";
-  }
+    document.getElementById("attemptsText").innerHTML = attempts;
+    if (attempts > 0 && attempts < 16) {
+      starRating = starRating;
+    } else if (attempts >= 16 && attempts <= 20) {
+      $("#starOne").removeClass("fa-star");
+      starRating = "2";
+    } else if (attempts > 20) {
+      $("#starTwo").removeClass("fa-star");
+      starRating = "1";
+    }
 }
 
 /*function determines if all matches have been completed.  Also, creates variables that display on the modal popup.*/
 function matchComplete() {
-  elapsedTime = elapsed;
-  console.log(elapsedText);
-  var modal = document.getElementById("win-popup");
-  var span = document.getElementsByClassName("close")[0];
-  $("#totalAttempts").text(attempts);
-  $("#totalStars").text(starRating);
-  $("#elapsedTime").text(elapsed);
-  modal.style.display = "block";
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-   $("#playAgainBtn").on("click", function() {
-       window.location.reload(true)
-   });
+    elapsedTime = elapsed;
+    console.log(elapsedText);
+    var modal = document.getElementById("win-popup");
+    var span = document.getElementsByClassName("close")[0];
+    $("#totalAttempts").text(attempts);
+    $("#totalStars").text(starRating);
+    $("#elapsedTime").text(elapsed);
+    modal.style.display = "block";
+    // When the user clicks on <span> (close), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+     $("#playAgainBtn").on("click", function() {
+         window.location.reload(true)
+     });
    clearInterval(timer);
 }
 
 /*This function creates a restart button on the main game page so a player can start over if desired.*/
 function reStart() {
-  $("restart").on("click", function() {
-  window.location.reload(true);
+    $("restart").on("click", function() {
+    window.location.reload(true);
 });
-   window.clearInterval(timer);
+    window.clearInterval(timer);
  }
 
 // Removes and cards that are in openCard whether by reStart or PlayAgain.*/
 function removeOpenCards() {
-  openCard = [];
+    openCard = [];
 }
 
 // Removes classes from card after a match except for the class match.*/
 function removeClasses() {
-  $(".card").removeClass("show open bounceIn shake wrong");
-  removeOpenCards();
+    $(".card").removeClass("show open bounceIn shake wrong");
+    removeOpenCards();
 }
 
-// Disable clicks
-function disableClick() {
- openCard.forEach(function (card) {
-   card.off("click");
-  });
-}
+
 
 
 /* Timer code from https://www.sitepoint.com/creating-accurate-timers-in-javascript/ */
