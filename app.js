@@ -62,13 +62,14 @@ function revealCard() {
     if ($(this).hasClass("open show")) { return;}
       $(this).toggleClass("open show");
       openCard.push($(this));
-      setTimeout(checkMatch, 400);
+      checkMatch();
 });}
 
 
 /*function that checks whether the cards selected by the player match.*/
 function checkMatch() {
     if (openCard.length === 2) {
+      $(".card").off("click");
       if (openCard[0].children().attr("class") === openCard[1].children().attr("class")) {
          openCard[0][0].classList.add("bounceIn", "match");
          openCard[1][0].classList.add("bounceIn", "match");
@@ -76,7 +77,8 @@ function checkMatch() {
          $(openCard[1]).off("click");
          matches += 1;
          attempts++;
-         setTimeout(removeOpenCards, 400);
+         setTimeout(removeOpenCards, 800);
+         setTimeout(revealCard, 1500);
          if(matches === 8) {
            window.clearInterval(timer);
            matchComplete();
@@ -88,6 +90,7 @@ function checkMatch() {
           attempts++;
           setTimeout(removeClasses, 800);
           removeOpenCards();
+          setTimeout(revealCard, 1500);
        }
      }
     updateMoves();
@@ -111,7 +114,6 @@ function updateMoves() {
 /*function determines if all matches have been completed.  Also, creates variables that display on the modal popup.*/
 function matchComplete() {
     elapsedTime = elapsed;
-    console.log(elapsedText);
     var modal = document.getElementById("win-popup");
     var span = document.getElementsByClassName("close")[0];
     $("#totalAttempts").text(attempts);
@@ -130,11 +132,13 @@ function matchComplete() {
 
 /*This function creates a restart button on the main game page so a player can start over if desired.*/
 function reStart() {
-    $("restart").on("click", function() {
-    window.location.reload(true);
+    $(".re-start").on("click", function() {
+        window.location.reload(true);
+        document.getElementById("re-start").addEventListener("click");
 });
     window.clearInterval(timer);
- }
+
+}
 
 // Removes and cards that are in openCard whether by reStart or PlayAgain.*/
 function removeOpenCards() {
@@ -146,8 +150,6 @@ function removeClasses() {
     $(".card").removeClass("show open bounceIn shake wrong");
     removeOpenCards();
 }
-
-
 
 
 /* Timer code from https://www.sitepoint.com/creating-accurate-timers-in-javascript/ */
